@@ -16,17 +16,17 @@ remain local.
 
 ## Technical Context
 
-**Language/Version**: TypeScript (strict mode), modern browser JavaScript runtime
+**Language/Version**: TypeScript (strict mode), Node.js `^22.12.0 || ^24.0.0 || >=26.0.0`
+for build/test tooling; modern browser JavaScript runtime
 
 **Primary Dependencies**: React, Vite, Tailwind CSS, `@imgly/background-removal` with
-its declared compatible `onnxruntime-web` peer; Vitest and Testing Library for
-unit/component tests; Playwright for browser workflow tests
+its declared compatible `onnxruntime-web` peer; Vitest for focused unit tests
 
 **Storage**: N/A; image and processing state are held in browser memory only
 
-**Testing**: Vitest + Testing Library for input/state/component behavior; Playwright for
-browser-level file, drag/drop, download, responsive, and clipboard workflows; manual
-network inspection to verify image privacy; deployed resource URL/CORS verification
+**Testing**: Vitest for deterministic input validation and state helpers; manual
+browser checks for model execution, file/drop/paste flows, download, responsive layout,
+clipboard permissions, and network inspection to verify image privacy
 
 **Target Platform**: Current desktop and mobile browsers that support the library's
 browser runtime; clipboard writes require a secure context, browser support, and
@@ -86,8 +86,6 @@ index.html
 package.json
 vite.config.ts
 tsconfig.json
-postcss.config.js
-tailwind.config.js
 src/
 ├── main.tsx
 ├── App.tsx
@@ -110,7 +108,7 @@ tests/
 └── e2e/
 ```
 
-**Structure Decision**: Use one Vite SPA with focused feature components, a single
+**Structure Decision**: Use Tailwind CSS 4 through its Vite integration. Use one Vite SPA with focused feature components, a single
 processing hook, and small browser-image helpers. The repository currently contains
 Spec Kit configuration and feature documents but no application package or source
 files, so this plan establishes the application structure rather than adapting an
